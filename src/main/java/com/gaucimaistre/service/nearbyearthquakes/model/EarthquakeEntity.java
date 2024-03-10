@@ -1,10 +1,11 @@
 package com.gaucimaistre.service.nearbyearthquakes.model;
 
+import java.time.Instant;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,5 +36,16 @@ public class EarthquakeEntity {
     @Column
     private double longitude;
 
+    @Column
+    private Instant time;
+
     private int distance;
+
+    public static Earthquake getEarthquake(EarthquakeEntity earthquake) {
+        return Earthquake.builder()
+            .magnitude(earthquake.getMagnitude())
+            .address(earthquake.getPlace())
+            .distance(earthquake.getDistance())
+            .build();
+    }
 }

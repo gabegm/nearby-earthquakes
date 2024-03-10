@@ -22,7 +22,9 @@ public interface EarthquakeRepository extends JpaRepository<EarthquakeEntity, St
                     , latitude
                     , longitude
                     , magnitude
+                    , time
             FROM earthquake
+            WHERE time >= DATEADD('DAY', -30, CURRENT_DATE)
             ORDER BY
                 1 ASC
             LIMIT 10

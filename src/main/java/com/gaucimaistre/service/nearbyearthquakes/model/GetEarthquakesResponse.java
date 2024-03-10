@@ -1,5 +1,6 @@
 package com.gaucimaistre.service.nearbyearthquakes.model;
 
+import java.time.Instant;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,6 +25,7 @@ public class GetEarthquakesResponse {
             private String place;
             @JsonProperty("mag")
             private double magnitude;
+            private Long time;
         }
 
         @NoArgsConstructor
@@ -40,6 +42,7 @@ public class GetEarthquakesResponse {
             .magnitude(feature.getProperties().getMagnitude())
             .latitude(feature.getGeometry().getCoordinates().get(0))
             .longitude(feature.getGeometry().getCoordinates().get(1))
+            .time(Instant.ofEpochSecond(feature.getProperties().getTime()))
             .build();
     }
 }

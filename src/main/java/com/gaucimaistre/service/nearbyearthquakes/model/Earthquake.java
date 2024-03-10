@@ -10,13 +10,12 @@ public class Earthquake {
     private final String address;
     private final int distance;
 
-    private static Earthquake getEarthquake(GetEarthquakesResponse earthquake) {
-        return Earthquake.builder()
-            .build();
-    }
-
-    private static Earthquake getEarthquake(EarthquakeEntity earthquake) {
-        return Earthquake.builder()
-            .build();
+    public final String getTitle() {
+        return "M " +
+            String.valueOf(magnitude) +
+            " | " +
+            address +
+            " || " +
+            String.valueOf(distance);
     }
 }

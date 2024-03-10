@@ -12,22 +12,18 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Slf4j
 public class GetEarthquakesByLocationResponse {
-    private final List<EarthquakeMapper> earthquakes;
+    private final List<EarthquakeResponse> earthquakes;
 
     @Builder
     @Getter
     @ToString
-    public static class EarthquakeMapper {
-        private final double magnitude;
-        private final String address;
-        private final int distance;
+    public static class EarthquakeResponse {
+        private final String title;
 
-        public static EarthquakeMapper mapEarthquake(EarthquakeEntity earthquake) {
+        public static EarthquakeResponse getEarthquake(Earthquake earthquake) {
             log.info(earthquake.toString());
-            return EarthquakeMapper.builder()
-                .magnitude(earthquake.getMagnitude())
-                .address(earthquake.getPlace())
-                .distance(earthquake.getDistance())
+            return EarthquakeResponse.builder()
+                .title(earthquake.getTitle())
                 .build();
         }
     }
