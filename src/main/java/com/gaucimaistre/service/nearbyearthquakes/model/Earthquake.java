@@ -13,7 +13,7 @@ public class Earthquake {
     public final String getTitle() {
         return "M " +
             String.valueOf(magnitude) +
-            " | " +
+            " - " +
             address +
             " || " +
             String.valueOf(distance);

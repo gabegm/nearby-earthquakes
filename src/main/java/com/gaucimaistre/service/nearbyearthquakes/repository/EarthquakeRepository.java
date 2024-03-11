@@ -23,8 +23,19 @@ public interface EarthquakeRepository extends JpaRepository<EarthquakeEntity, St
                     , longitude
                     , magnitude
                     , time
-            FROM earthquake
+            FROM (
+                SELECT
+                    id
+                    , place
+                    , latitude
+                    , longitude
+                    , magnitude
+                    , time
+                    , ROW_NUMBER() OVER(PARTITION BY latitude, longitude ORDER BY id) AS rn
+                FROM earthquake
+            ) AS earthquake
             WHERE time >= DATEADD('DAY', -30, CURRENT_DATE)
+            AND rn = 1
             ORDER BY
                 1 ASC
             LIMIT 10
