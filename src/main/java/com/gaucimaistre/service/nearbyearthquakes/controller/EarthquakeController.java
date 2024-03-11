@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 public class EarthquakeController {
     private final EarthquakeService service;
+
+    @GetMapping("/")
+    @ResponseBody
+    public String home() {
+        return "";
+    }
 
     @GetMapping("/nearby")
     @ResponseBody

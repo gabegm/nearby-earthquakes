@@ -32,9 +32,9 @@ public interface EarthquakeRepository extends JpaRepository<EarthquakeEntity, St
     List<EarthquakeEntity> findByDistance(@Param("latitude") double latitude,
         @Param("longitude") double longitude);
 
-    EarthquakeEntity findByMagnitudeGreaterThanEqual(double magnitude);
+    List<EarthquakeEntity> findByMagnitudeGreaterThanEqual(double magnitude);
 
-    EarthquakeEntity findByMagnitudeLessThanEqual(double magnitude);
+    List<EarthquakeEntity> findByMagnitudeLessThanEqual(double magnitude);
 
-    EarthquakeEntity findByMagnitudeBetween(double from, double to);
+    List<EarthquakeEntity> findByMagnitudeBetween(double from, double to);
 }
