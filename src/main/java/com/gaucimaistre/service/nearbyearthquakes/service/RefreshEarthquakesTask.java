@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +25,8 @@ public class RefreshEarthquakesTask {
     private final EarthquakeRepository repository;
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRate = 5000 * 60)
+    @EventListener(ApplicationReadyEvent.class)
+    @Scheduled(cron = "0 9 * * * ?")
 	public void refreshEarthquakes() {
 		log.info("The time is now {}", dateFormat.format(new Date()));
         GetEarthquakesResponse earthquakes = client.getEarthquakes();
