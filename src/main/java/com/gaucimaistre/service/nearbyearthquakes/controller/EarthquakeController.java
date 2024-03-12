@@ -21,12 +21,14 @@ public class EarthquakeController {
     @GetMapping("/")
     @ResponseBody
     public String home() {
+        log.info("Handling home request");
         return "";
     }
 
     @GetMapping("/nearby")
     @ResponseBody
     public GetEarthquakesByLocationResponse getNearbyEarthquakes(@RequestParam String latitude, @RequestParam String longitude) {
+        log.info("Handling GetNearbyEarthquakes request");
         return service.getNearbyEarthquakes(latitude, longitude);
     }
 }
