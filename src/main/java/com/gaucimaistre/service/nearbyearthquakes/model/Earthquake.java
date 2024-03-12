@@ -2,9 +2,11 @@ package com.gaucimaistre.service.nearbyearthquakes.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @Builder
+@ToString
 public class Earthquake {
     private final double magnitude;
     private final String address;
