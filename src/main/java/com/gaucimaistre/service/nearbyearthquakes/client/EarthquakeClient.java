@@ -16,9 +16,12 @@ public class EarthquakeClient {
     @Value("${api.earthquakes.url}")
     private String URL;
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
+
     public GetEarthquakesResponse getEarthquakes() {
       log.info(URL);
-      RestTemplate restTemplate = new RestTemplate();
+
       GetEarthquakesResponse earthquakes = restTemplate.getForObject(URL,
         GetEarthquakesResponse.class);
 
