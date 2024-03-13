@@ -1,9 +1,7 @@
 package com.gaucimaistre.service.nearbyearthquakes.dto;
 
-import java.time.Instant;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
 
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -44,16 +42,5 @@ public class GetEarthquakesResponse {
         public static class Geometry {
             private List<Double> coordinates;
         }
-    }
-
-    public static EarthquakeEntity getEarthquake(Feature feature) {
-        return EarthquakeEntity.builder()
-            .id(feature.getId())
-            .place(feature.getProperties().getPlace())
-            .magnitude(feature.getProperties().getMagnitude())
-            .latitude(feature.getGeometry().getCoordinates().get(0))
-            .longitude(feature.getGeometry().getCoordinates().get(1))
-            .time(Instant.ofEpochSecond(feature.getProperties().getTime()))
-            .build();
     }
 }
