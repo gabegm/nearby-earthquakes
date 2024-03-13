@@ -28,7 +28,16 @@ public class EarthquakeController {
     @GetMapping("/nearby")
     @ResponseBody
     public GetEarthquakesByLocationResponse getNearbyEarthquakes(@RequestParam String latitude, @RequestParam String longitude) {
-        log.info("Handling GetNearbyEarthquakes request");
-        return service.getNearbyEarthquakes(latitude, longitude);
+        try {
+            log.info("Handling GetNearbyEarthquakes request");
+            GetEarthquakesByLocationResponse response = service.getNearbyEarthquakes(latitude, longitude);
+            log.debug(response.toString());
+
+            return response;
+        } catch (Exception exception) {
+            log.error("GetNearbyEarthquakes request failed", exception);
+        }
+
+        return new GetEarthquakesByLocationResponse(null);
     }
 }
