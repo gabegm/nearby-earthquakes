@@ -2,7 +2,7 @@ package com.gaucimaistre.service.nearbyearthquakes.client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse;
 
@@ -15,14 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 public class EarthquakeClient {
     @Value("${api.earthquakes.url}")
     private String URL;
-
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
     public GetEarthquakesResponse getEarthquakes() {
       log.info(URL);
 
-      GetEarthquakesResponse earthquakes = restTemplate.getForObject(URL,
-        GetEarthquakesResponse.class);
+      GetEarthquakesResponse earthquakes = webClient.get()
+              .uri(URL)
+              .retrieve()
+              .bodyToMono(GetEarthquakesResponse.class)
+              .block();
 
         return earthquakes;
     }
