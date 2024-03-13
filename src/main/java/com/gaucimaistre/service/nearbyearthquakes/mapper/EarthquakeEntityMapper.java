@@ -2,21 +2,19 @@ package com.gaucimaistre.service.nearbyearthquakes.mapper;
 
 import java.time.Instant;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Feature;
 import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
 
-@Component
-public abstract class EarthquakeEntityMapper {
-    public static EarthquakeEntity mapToEarthquakeEntity(Feature feature) {
-        return EarthquakeEntity.builder()
-            .id(feature.getId())
-            .place(feature.getProperties().getPlace())
-            .magnitude(feature.getProperties().getMagnitude())
-            .latitude(feature.getGeometry().getCoordinates().get(0))
-            .longitude(feature.getGeometry().getCoordinates().get(1))
-            .time(Instant.ofEpochSecond(feature.getProperties().getTime()))
-            .build();
-    }
+@Mapper(componentModel = "spring",  imports = Instant.class)
+public interface EarthquakeEntityMapper {
+    @Mapping(target = "place", source = "feature.properties.place")
+    @Mapping(target = "magnitude", source = "feature.properties.magnitude")
+    @Mapping(target = "latitude", expression = "java(feature.geometry().coordinates().get(0))")
+    @Mapping(target = "longitude", expression = "java(feature.geometry().coordinates().get(1))")
+    @Mapping(target = "time", expression = "java(Instant.ofEpochSecond(feature.properties().time()))")
+    @Mapping(target = "distance", ignore = true)
+    EarthquakeEntity mapToEarthquakeEntity (Feature feature);
 }

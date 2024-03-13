@@ -1,18 +1,13 @@
 package com.gaucimaistre.service.nearbyearthquakes.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.gaucimaistre.service.nearbyearthquakes.model.Earthquake;
 import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
 
-@Component
-public abstract class EarthquakeMapper {
-
-    public static Earthquake mapToEarthquake(EarthquakeEntity earthquakeEntity) {
-        return Earthquake.builder()
-            .magnitude(earthquakeEntity.getMagnitude())
-            .address(earthquakeEntity.getPlace())
-            .distance(earthquakeEntity.getDistance())
-            .build();
-    }
+@Mapper
+public interface EarthquakeMapper {
+    @Mapping(target = "address", source = "place")
+    Earthquake mapToEarthquake(EarthquakeEntity earthquakeEntity);
 }

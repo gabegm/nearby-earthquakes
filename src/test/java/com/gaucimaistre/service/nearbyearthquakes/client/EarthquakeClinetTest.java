@@ -22,44 +22,34 @@ public class EarthquakeClinetTest {
 
     @Test
     public void getEarthquakes() {
-        GetEarthquakesResponse expectedResponse = GetEarthquakesResponse.builder()
-            .features(List.of(Feature.builder()
-                .id("someId")
-                .properties(Properties.builder()
-                    .place("somePlace")
-                    .magnitude(1.5)
-                    .time(1234L)
-                    .build())
-                .geometry(Geometry.builder()
-                    .coordinates(List.of(1.1, 2.2, 3.3))
-                    .build())
-                .build(),
-                Feature.builder()
-                .id("someOtherId")
-                .properties(Properties.builder()
-                    .place("someOtherPlace")
-                    .magnitude(2.1)
-                    .time(5678L)
-                    .build())
-                .geometry(Geometry.builder()
-                    .coordinates(List.of(4.4, 5.5, 6.6))
-                    .build())
-                .build()))
-            .build();
+        GetEarthquakesResponse expectedResponse = new GetEarthquakesResponse(
+            List.of(
+                new Feature(
+                    "someId",
+                    new Properties("somePlace", 1.5, 1234L),
+                    new Geometry(List.of(1.1, 2.2, 3.3))
+                ),
+                new Feature(
+                    "someOtherId",
+                    new Properties("someOtherPlace", 2.1, 5678L),
+                    new Geometry(List.of(4.4, 5.5, 6.6))
+                )
+            )
+        );
 
         when(client.getEarthquakes()).thenReturn(expectedResponse);
         GetEarthquakesResponse actualResponse = client.getEarthquakes();
 
-        assertThat(actualResponse.getFeatures().get(0).getId()).isEqualTo(expectedResponse.getFeatures().get(0).getId());
-        assertThat(actualResponse.getFeatures().get(0).getProperties().getPlace()).isEqualTo(expectedResponse.getFeatures().get(0).getProperties().getPlace());
-        assertThat(actualResponse.getFeatures().get(0).getProperties().getMagnitude()).isEqualTo(expectedResponse.getFeatures().get(0).getProperties().getMagnitude());
-        assertThat(actualResponse.getFeatures().get(0).getProperties().getTime()).isEqualTo(expectedResponse.getFeatures().get(0).getProperties().getTime());
-        assertThat(actualResponse.getFeatures().get(0).getGeometry().getCoordinates()).isEqualTo(expectedResponse.getFeatures().get(0).getGeometry().getCoordinates());
+        assertThat(actualResponse.features().get(0).id()).isEqualTo(expectedResponse.features().get(0).id());
+        assertThat(actualResponse.features().get(0).properties().place()).isEqualTo(expectedResponse.features().get(0).properties().place());
+        assertThat(actualResponse.features().get(0).properties().magnitude()).isEqualTo(expectedResponse.features().get(0).properties().magnitude());
+        assertThat(actualResponse.features().get(0).properties().time()).isEqualTo(expectedResponse.features().get(0).properties().time());
+        assertThat(actualResponse.features().get(0).geometry().coordinates()).isEqualTo(expectedResponse.features().get(0).geometry().coordinates());
 
-        assertThat(actualResponse.getFeatures().get(1).getId()).isEqualTo(expectedResponse.getFeatures().get(1).getId());
-        assertThat(actualResponse.getFeatures().get(1).getProperties().getPlace()).isEqualTo(expectedResponse.getFeatures().get(1).getProperties().getPlace());
-        assertThat(actualResponse.getFeatures().get(1).getProperties().getMagnitude()).isEqualTo(expectedResponse.getFeatures().get(1).getProperties().getMagnitude());
-        assertThat(actualResponse.getFeatures().get(1).getProperties().getTime()).isEqualTo(expectedResponse.getFeatures().get(1).getProperties().getTime());
-        assertThat(actualResponse.getFeatures().get(1).getGeometry().getCoordinates()).isEqualTo(expectedResponse.getFeatures().get(1).getGeometry().getCoordinates());
+        assertThat(actualResponse.features().get(1).id()).isEqualTo(expectedResponse.features().get(1).id());
+        assertThat(actualResponse.features().get(1).properties().place()).isEqualTo(expectedResponse.features().get(1).properties().place());
+        assertThat(actualResponse.features().get(1).properties().magnitude()).isEqualTo(expectedResponse.features().get(1).properties().magnitude());
+        assertThat(actualResponse.features().get(1).properties().time()).isEqualTo(expectedResponse.features().get(1).properties().time());
+        assertThat(actualResponse.features().get(1).geometry().coordinates()).isEqualTo(expectedResponse.features().get(1).geometry().coordinates());
     }
 }

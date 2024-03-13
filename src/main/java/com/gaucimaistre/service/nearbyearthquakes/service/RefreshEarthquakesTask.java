@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
@@ -26,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 public class RefreshEarthquakesTask {
     private final EarthquakeClient client;
     private final EarthquakeRepository repository;
+
+    private static final EarthquakeEntityMapper earthquakeEntityMapper = Mappers.getMapper(EarthquakeEntityMapper.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @EventListener(ApplicationReadyEvent.class)
@@ -34,9 +37,9 @@ public class RefreshEarthquakesTask {
 		log.debug("The time is now {}", dateFormat.format(new Date()));
 
         GetEarthquakesResponse earthquakes = client.getEarthquakes();
-        List<EarthquakeEntity> earthquakeEntities = earthquakes.getFeatures()
+        List<EarthquakeEntity> earthquakeEntities = earthquakes.features()
             .stream()
-            .map(EarthquakeEntityMapper::mapToEarthquakeEntity)
+            .map(earthquakeEntityMapper::mapToEarthquakeEntity)
             .toList();
 
         repository.saveAll(earthquakeEntities);

@@ -1,20 +1,13 @@
 package com.gaucimaistre.service.nearbyearthquakes.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse.EarthquakeResponse;
 import com.gaucimaistre.service.nearbyearthquakes.model.Earthquake;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-@Component
-public abstract class EarthquakeResponseMapper {
-    public static EarthquakeResponse mapToEarthquakeResponse(Earthquake earthquake) {
-            log.info(earthquake.toString());
-
-            return EarthquakeResponse.builder()
-                .title(earthquake.getTitle())
-                .build();
-        }
+@Mapper
+public interface EarthquakeResponseMapper {
+        @Mapping(target = "title", expression = "java(earthquake.getTitle())")
+        EarthquakeResponse mapToEarthquakeResponse(Earthquake earthquake);
 }

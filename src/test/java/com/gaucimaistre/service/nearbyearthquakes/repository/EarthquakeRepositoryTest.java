@@ -22,20 +22,22 @@ public class EarthquakeRepositoryTest {
 
     @Test
     public void findByMagnitudeGreaterThanEqual() {
-        List<EarthquakeEntity> earthquakes = List.of(EarthquakeEntity.builder()
-                .id("someId")
-                .place("somePlace")
-                .magnitude(1.1)
-                .latitude(-122.7985001)
-                .longitude(38.829834)
-                .build(),
-            EarthquakeEntity.builder()
-                .id("someOtherId")
-                .place("someOtherPlace")
-                .magnitude(2.2)
-                .latitude(-155.1486)
-                .longitude(57.5289)
-                .build());
+        List<EarthquakeEntity> earthquakes = List.of(
+            new EarthquakeEntity("someId", 
+                "somePlace", 
+                1.1, 
+                -122.7985001, 
+                38.829834, 
+                null, 
+                0),
+            new EarthquakeEntity("someOtherId", 
+                "someOtherPlace", 
+                2.2, 
+                -155.1486, 
+                57.5289, 
+                null, 
+                0)
+        );
 
         repository.saveAll(earthquakes);
 

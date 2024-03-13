@@ -1,46 +1,13 @@
 package com.gaucimaistre.service.nearbyearthquakes.dto;
 
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record GetEarthquakesResponse(List<Feature> features) {
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class GetEarthquakesResponse {
-    private List<Feature> features;
-
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Feature {
-        private String id;
-        private Properties properties;
-        private Geometry geometry;
-
-        @NoArgsConstructor
-        @Builder
-        @AllArgsConstructor
-        @Getter
-        public static class Properties {
-            private String place;
-            @JsonProperty("mag")
-            private double magnitude;
-            private Long time;
-        }
-
-        @NoArgsConstructor
-        @Builder
-        @AllArgsConstructor
-        @Getter
-        public static class Geometry {
-            private List<Double> coordinates;
-        }
+    public record Feature(String id, Properties properties, Geometry geometry) {
+        public record Properties(String place, @JsonProperty("mag") double magnitude, Long time) {}
+        public record Geometry(List<Double> coordinates) {}
     }
 }
