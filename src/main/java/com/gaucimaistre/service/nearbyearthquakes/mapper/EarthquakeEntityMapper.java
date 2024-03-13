@@ -4,8 +4,8 @@ import java.time.Instant;
 
 import org.springframework.stereotype.Component;
 
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Feature;
 import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesResponse.Feature;
 
 @Component
 public abstract class EarthquakeEntityMapper {

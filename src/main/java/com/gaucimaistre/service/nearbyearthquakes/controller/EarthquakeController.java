@@ -2,7 +2,7 @@ package com.gaucimaistre.service.nearbyearthquakes.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesByLocationResponse;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
 import com.gaucimaistre.service.nearbyearthquakes.service.EarthquakeService;
 
 import lombok.RequiredArgsConstructor;

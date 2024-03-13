@@ -1,4 +1,4 @@
-package com.gaucimaistre.service.nearbyearthquakes.model;
+package com.gaucimaistre.service.nearbyearthquakes.dto;
 
 import java.util.List;
 

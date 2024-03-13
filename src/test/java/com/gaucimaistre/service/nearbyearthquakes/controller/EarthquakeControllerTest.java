@@ -10,8 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesByLocationResponse;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesByLocationResponse.EarthquakeResponse;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse.EarthquakeResponse;
 import com.gaucimaistre.service.nearbyearthquakes.service.EarthquakeService;
 
 @ExtendWith(MockitoExtension.class)

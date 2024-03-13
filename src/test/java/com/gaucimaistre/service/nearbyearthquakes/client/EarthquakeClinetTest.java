@@ -10,10 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesResponse;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesResponse.Feature;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesResponse.Feature.Geometry;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesResponse.Feature.Properties;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Feature;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Feature.Geometry;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Feature.Properties;
 
 @ExtendWith(MockitoExtension.class)
 public class EarthquakeClinetTest {

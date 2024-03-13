@@ -1,8 +1,9 @@
-package com.gaucimaistre.service.nearbyearthquakes.model;
+package com.gaucimaistre.service.nearbyearthquakes.dto;
 
 import java.time.Instant;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
 
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;

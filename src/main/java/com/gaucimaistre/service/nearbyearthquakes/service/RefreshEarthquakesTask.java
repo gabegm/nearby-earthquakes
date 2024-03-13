@@ -5,14 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.gaucimaistre.service.nearbyearthquakes.client.EarthquakeClient;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse;
 import com.gaucimaistre.service.nearbyearthquakes.mapper.EarthquakeEntityMapper;
 import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesResponse;
 import com.gaucimaistre.service.nearbyearthquakes.repository.EarthquakeRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
+@Profile("!test")
 @RequiredArgsConstructor
 public class RefreshEarthquakesTask {
     private final EarthquakeClient client;

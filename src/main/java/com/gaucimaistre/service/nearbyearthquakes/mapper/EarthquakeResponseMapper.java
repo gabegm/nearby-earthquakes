@@ -2,8 +2,8 @@ package com.gaucimaistre.service.nearbyearthquakes.mapper;
 
 import org.springframework.stereotype.Component;
 
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse.EarthquakeResponse;
 import com.gaucimaistre.service.nearbyearthquakes.model.Earthquake;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesByLocationResponse.EarthquakeResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
