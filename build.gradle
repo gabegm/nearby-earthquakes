@@ -52,4 +52,5 @@ task mapStruct() {
         options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
     }
 }
+
 compileJava.dependsOn(mapStruct)
