@@ -36,7 +36,6 @@ dependencies {
 	}
 
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
@@ -45,3 +44,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+task mapStruct() {
+    sourceSets.main.java.srcDir file("${buildDir}/mappers")
+    tasks.withType(JavaCompile) {
+        options.setAnnotationProcessorGeneratedSourcesDirectory(file("${buildDir}/mappers"))
+        options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
+    }
+}
+compileJava.dependsOn(mapStruct)

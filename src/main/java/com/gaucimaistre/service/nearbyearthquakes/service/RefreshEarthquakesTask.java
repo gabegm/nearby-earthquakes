@@ -1,10 +1,10 @@
 package com.gaucimaistre.service.nearbyearthquakes.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
@@ -28,13 +28,14 @@ public class RefreshEarthquakesTask {
     private final EarthquakeClient client;
     private final EarthquakeRepository repository;
 
-    private static final EarthquakeEntityMapper earthquakeEntityMapper = Mappers.getMapper(EarthquakeEntityMapper.class);
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("HH:mm:ss")
+            .withZone(ZoneId.systemDefault());
+    private final EarthquakeEntityMapper earthquakeEntityMapper;
 
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(cron = "0 9 * * * ?")
 	public void refreshEarthquakes() {
-		log.debug("The time is now {}", dateFormat.format(new Date()));
+		log.debug("The time is now {}", dateFormat.format(Instant.now()));
 
         GetEarthquakesResponse earthquakes = client.getEarthquakes();
         List<EarthquakeEntity> earthquakeEntities = earthquakes.features()

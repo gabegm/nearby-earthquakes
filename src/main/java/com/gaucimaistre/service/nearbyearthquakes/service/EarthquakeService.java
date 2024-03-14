@@ -2,7 +2,6 @@ package com.gaucimaistre.service.nearbyearthquakes.service;
 
 import java.util.List;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
@@ -18,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class EarthquakeService {
     private final EarthquakeRepository repository;
 
-    private static final EarthquakeMapper earthquakeMapper = Mappers.getMapper(EarthquakeMapper.class);
-    private static final EarthquakeResponseMapper earthquakeResponseMapper = Mappers.getMapper(EarthquakeResponseMapper.class);
+    private final EarthquakeMapper earthquakeMapper;
+    private final EarthquakeResponseMapper earthquakeResponseMapper;
 
     public GetEarthquakesByLocationResponse getNearbyEarthquakes(String latitude, String longitude) {
         List<Earthquake> earthquakes = repository.findByDistance(Double.parseDouble(latitude), Double.parseDouble(longitude))

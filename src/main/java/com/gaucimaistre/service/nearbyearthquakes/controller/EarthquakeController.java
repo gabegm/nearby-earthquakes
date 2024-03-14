@@ -8,6 +8,7 @@ import com.gaucimaistre.service.nearbyearthquakes.service.EarthquakeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,14 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class EarthquakeController {
     private final EarthquakeService service;
 
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String home() {
         log.info("Handling home request");
         return "";
     }
 
-    @GetMapping("/nearby")
+    @GetMapping(value = "/nearby", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public GetEarthquakesByLocationResponse getNearbyEarthquakes(@RequestParam String latitude, @RequestParam String longitude) {
         try {
