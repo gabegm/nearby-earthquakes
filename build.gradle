@@ -12,10 +12,6 @@ java {
 	targetCompatibility = '21'
 }
 
-wrapper {
-	gradleVersion = '8.5'
-}
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -55,11 +51,6 @@ task mapStruct() {
         options.setAnnotationProcessorGeneratedSourcesDirectory(file("${buildDir}/mappers"))
         options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
     }
-}
-
-tasks.named('wrapper') {
-  distributionType = Wrapper.DistributionType.ALL
-  gradleVersion = '8.5'
 }
 
 compileJava.dependsOn(mapStruct)
