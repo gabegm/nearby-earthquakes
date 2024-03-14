@@ -57,4 +57,9 @@ task mapStruct() {
     }
 }
 
+tasks.named('wrapper') {
+  distributionType = Wrapper.DistributionType.ALL
+  gradleVersion = '8.5'
+}
+
 compileJava.dependsOn(mapStruct)
