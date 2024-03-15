@@ -2,9 +2,16 @@
 
 Retrieve the top 10 nearest earthquakes based on calculated distance.
 
+## Prerequisites
+
+* Java 21
+* Gradle 8.5
+
+
 ## Build
 
 ```sh
+$ gradle wrapper
 $ ./gradlew clean build
 ```
 

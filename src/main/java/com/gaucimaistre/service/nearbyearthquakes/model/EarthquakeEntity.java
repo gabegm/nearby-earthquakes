@@ -6,8 +6,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -15,9 +15,8 @@ import lombok.ToString;
 @Entity(name="earthquake")
 @Table(name="earthquake")
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Builder
 @ToString
 public class EarthquakeEntity {
     @Id
@@ -40,12 +39,4 @@ public class EarthquakeEntity {
     private Instant time;
 
     private int distance;
-
-    public static Earthquake getEarthquake(EarthquakeEntity earthquake) {
-        return Earthquake.builder()
-            .magnitude(earthquake.getMagnitude())
-            .address(earthquake.getPlace())
-            .distance(earthquake.getDistance())
-            .build();
-    }
 }

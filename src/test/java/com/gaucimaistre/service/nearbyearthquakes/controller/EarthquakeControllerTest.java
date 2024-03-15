@@ -10,8 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesByLocationResponse;
-import com.gaucimaistre.service.nearbyearthquakes.model.GetEarthquakesByLocationResponse.EarthquakeResponse;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
+import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse.EarthquakeResponse;
 import com.gaucimaistre.service.nearbyearthquakes.service.EarthquakeService;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,19 +21,17 @@ public class EarthquakeControllerTest {
 
     @Test
     public void getNearbyEarthquakes() {
-        GetEarthquakesByLocationResponse expectedResponse = GetEarthquakesByLocationResponse.builder()
-            .earthquakes(List.of(EarthquakeResponse.builder()
-                .title("someTitle")
-                .build(),
-                EarthquakeResponse.builder()
-                .title("someOtherTitle")
-                .build()))
-            .build();
+        GetEarthquakesByLocationResponse expectedResponse = new GetEarthquakesByLocationResponse(
+            List.of(
+                new EarthquakeResponse("someTitle"),
+                new EarthquakeResponse("someOtherTitle")
+            )
+        );
 
         when(service.getNearbyEarthquakes("1.1", "2.2")).thenReturn(expectedResponse);
         GetEarthquakesByLocationResponse actualResponse = service.getNearbyEarthquakes("1.1", "2.2");
 
-        assertThat(actualResponse.getEarthquakes().get(0).getTitle()).isEqualTo(expectedResponse.getEarthquakes().get(0).getTitle());
-        assertThat(actualResponse.getEarthquakes().get(1).getTitle()).isEqualTo(expectedResponse.getEarthquakes().get(1).getTitle());
+        assertThat(actualResponse.earthquakes().get(0).title()).isEqualTo(expectedResponse.earthquakes().get(0).title());
+        assertThat(actualResponse.earthquakes().get(1).title()).isEqualTo(expectedResponse.earthquakes().get(1).title());
     }
 }

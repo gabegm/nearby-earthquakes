@@ -1,0 +1,47 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "Dependabot"
+    groups:
+      dependencies-minor:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      dependencies-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+    reviewers:
+      - "gabegm"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "Dependabot"
+    groups:
+      dependencies-minor:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      dependencies-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+    reviewers:
+      - "gabegm"
