@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Profile("!test")
 @RequiredArgsConstructor
 public class RefreshEarthquakesTask {
-    private final EarthquakeClient client;
+    private final EarthquakeClient earthquakeWebClient;
     private final EarthquakeRepository repository;
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("HH:mm:ss")
@@ -37,7 +37,7 @@ public class RefreshEarthquakesTask {
 	public void refreshEarthquakes() {
 		log.debug("The time is now {}", dateFormat.format(Instant.now()));
 
-        GetEarthquakesResponse earthquakes = client.getEarthquakes();
+        GetEarthquakesResponse earthquakes = earthquakeWebClient.getEarthquakes();
         List<EarthquakeEntity> earthquakeEntities = earthquakes.features()
             .stream()
             .map(earthquakeEntityMapper::mapToEarthquakeEntity)

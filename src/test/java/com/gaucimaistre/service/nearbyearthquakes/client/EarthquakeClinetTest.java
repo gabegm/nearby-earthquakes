@@ -18,7 +18,7 @@ import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Fea
 @ExtendWith(MockitoExtension.class)
 public class EarthquakeClinetTest {
     @Mock
-    private EarthquakeClient client;
+    private EarthquakeWebClient client;
 
     @Test
     public void getEarthquakes() {
