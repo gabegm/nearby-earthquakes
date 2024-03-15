@@ -10,6 +10,7 @@ import com.gaucimaistre.service.nearbyearthquakes.service.EarthquakeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +32,10 @@ public class EarthquakeController {
 
     @GetMapping(value = "/nearby", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public GetEarthquakesByLocationResponse getNearbyEarthquakes(@RequestParam String latitude, @RequestParam String longitude) {
+    public GetEarthquakesByLocationResponse getNearbyEarthquakes(@RequestParam Double latitude, @RequestParam Double longitude) {
         try {
             log.info("Handling GetNearbyEarthquakes request");
-            GetEarthquakesByLocationResponse response = service.getNearbyEarthquakes(latitude, longitude);
+            GetEarthquakesByLocationResponse response = service.getNearbyEarthquakes(new Point(latitude, longitude));
             log.debug(response.toString());
 
             return response;

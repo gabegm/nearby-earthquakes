@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.geo.Point;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse.EarthquakeResponse;
@@ -28,8 +29,9 @@ public class EarthquakeControllerTest {
             )
         );
 
-        when(service.getNearbyEarthquakes("1.1", "2.2")).thenReturn(expectedResponse);
-        GetEarthquakesByLocationResponse actualResponse = service.getNearbyEarthquakes("1.1", "2.2");
+        Point point = new Point(1.1, 2.2);
+        when(service.getNearbyEarthquakes(point)).thenReturn(expectedResponse);
+        GetEarthquakesByLocationResponse actualResponse = service.getNearbyEarthquakes(point);
 
         assertThat(actualResponse.earthquakes().get(0).title()).isEqualTo(expectedResponse.earthquakes().get(0).title());
         assertThat(actualResponse.earthquakes().get(1).title()).isEqualTo(expectedResponse.earthquakes().get(1).title());

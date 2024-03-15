@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.gaucimaistre.service.nearbyearthquakes.client.EarthquakeClient;
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse;
+import com.gaucimaistre.service.nearbyearthquakes.exception.EarthquakeRetrievalFailedException;
 import com.gaucimaistre.service.nearbyearthquakes.mapper.EarthquakeEntityMapper;
 import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
 import com.gaucimaistre.service.nearbyearthquakes.repository.EarthquakeRepository;
@@ -35,14 +36,18 @@ public class RefreshEarthquakesTask {
     @EventListener(ApplicationReadyEvent.class)
     @Scheduled(cron = "0 9 * * * ?")
 	public void refreshEarthquakes() {
-		log.debug("The time is now {}", dateFormat.format(Instant.now()));
+        try {
+            log.debug("The time is now {}", dateFormat.format(Instant.now()));
 
-        GetEarthquakesResponse earthquakes = earthquakeWebClient.getEarthquakes();
-        List<EarthquakeEntity> earthquakeEntities = earthquakes.features()
-            .stream()
-            .map(earthquakeEntityMapper::mapToEarthquakeEntity)
-            .toList();
+            GetEarthquakesResponse earthquakes = earthquakeWebClient.getEarthquakes();
+            List<EarthquakeEntity> earthquakeEntities = earthquakes.features()
+                .stream()
+                .map(earthquakeEntityMapper::mapToEarthquakeEntity)
+                .toList();
 
-        repository.saveAll(earthquakeEntities);
+            repository.saveAll(earthquakeEntities);
+        } catch(EarthquakeRetrievalFailedException exception) {
+            log.error("Failed to retrieve response from client", exception);
+        }
 	}
 }
