@@ -1,7 +1,7 @@
 package com.gaucimaistre.service.nearbyearthquakes.client;
 
-import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Fea
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse.Feature.Properties;
 
 @ExtendWith(MockitoExtension.class)
-public class EarthquakeClinetTest {
+public class EarthquakeFileClientTest {
     @Mock
-    private EarthquakeWebClient client;
+    private EarthquakeClient earthquakeFileClient;
 
     @Test
     public void getEarthquakes() {
@@ -37,8 +37,8 @@ public class EarthquakeClinetTest {
             )
         );
 
-        when(client.getEarthquakes()).thenReturn(expectedResponse);
-        GetEarthquakesResponse actualResponse = client.getEarthquakes();
+        when(earthquakeFileClient.getEarthquakes()).thenReturn(expectedResponse);
+        GetEarthquakesResponse actualResponse = earthquakeFileClient.getEarthquakes();
 
         assertThat(actualResponse.features().get(0).id()).isEqualTo(expectedResponse.features().get(0).id());
         assertThat(actualResponse.features().get(0).properties().place()).isEqualTo(expectedResponse.features().get(0).properties().place());
