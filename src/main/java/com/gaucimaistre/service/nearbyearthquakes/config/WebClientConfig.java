@@ -13,13 +13,13 @@ public class WebClientConfig {
     WebClient webClient() {
         final int size = 16 * 1024 * 1024;
         final ExchangeStrategies strategies = ExchangeStrategies.builder()
-            .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
-            .build();
+                .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
+                .build();
 
         return WebClient.builder()
-            .exchangeStrategies(strategies)
-            .defaultCookie("cookie-name", "cookie-value")
-            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .build();
+                .exchangeStrategies(strategies)
+                .defaultCookie("cookie-name", "cookie-value")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
     }
 }

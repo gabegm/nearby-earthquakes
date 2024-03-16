@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 class NearbyEarthquakesApplicationTests {
-	@Autowired
+    @Autowired
     private MockMvc mvc;
 
     @Test

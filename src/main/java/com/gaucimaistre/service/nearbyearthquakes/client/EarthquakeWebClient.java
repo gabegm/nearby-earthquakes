@@ -28,9 +28,10 @@ public class EarthquakeWebClient implements EarthquakeClient {
                     .bodyToMono(GetEarthquakesResponse.class)
                     .block();
 
-        return earthquakes;
+            return earthquakes;
         } catch (RuntimeException exception) {
-            final EarthquakeRetrievalFailedException earthquakeRetrievalFailedException = new EarthquakeRetrievalFailedException(exception);
+            final EarthquakeRetrievalFailedException earthquakeRetrievalFailedException = new EarthquakeRetrievalFailedException(
+                    exception);
             log.error("API call failed", earthquakeRetrievalFailedException);
             throw earthquakeRetrievalFailedException;
         }

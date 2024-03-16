@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity(name="earthquake")
-@Table(name="earthquake")
+@Entity(name = "earthquake")
+@Table(name = "earthquake")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
