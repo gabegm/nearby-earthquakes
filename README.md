@@ -1,27 +1,36 @@
-# Nearby Earthquakes
+# Earthquake API Service
 
-Retrieve the top 10 nearest earthquakes based on calculated distance.
+The Earthquake API Service is a Spring Boot application that provides a RESTful API for retrieving information about earthquakes based on geographical coordinates. It leverages an in-memory cache to store earthquake data and offers endpoints for querying the nearest earthquakes.
 
-## Prerequisites
+## Features
 
-* Java 21
-* Gradle 8.5
+* Retrieve the nearest 10 earthquakes based on longitude and latitude.
+* Scheduled task to fetch the latest earthquakes from the U.S. Geological Survey (USGS) daily.
 
+## Installation
 
-## Build
+### Prerequisites
+
+* Java 21 or higher
+* Gradle (if running directly)
+* Docker (if using Docker)
+
+## Building the Application
 
 ```sh
 $ gradle wrapper
 $ ./gradlew clean build
 ```
 
-## Tests
+## Testing the Application
 
 ```sh
 $ ./gradlew test
 ```
 
-## Run
+## Running the Application
+
+1. Directly with Gradle:
 
 ```sh
 $ ./gradlew bootRun
@@ -63,7 +72,7 @@ $ curl -v http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226
 }
 ```
 
-## Docker
+2. Using Docker:
 
 ```sh
 $ docker build -t nearby-earthquakes .
@@ -77,3 +86,23 @@ $ curl -v http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226
     ]
 }
 ```
+
+## API Endpoints
+
+### Get Nearest Earthquakes
+* Endpoint: /api/nearby
+* Method: GET
+* Parameters:
+    * longitude: Longitude of the location (required)
+    * latitude: Latitude of the location (required)
+* Response:
+    * Returns the 10 nearest earthquakes in JSON format.
+
+## Configuration
+
+* The application uses an in-memory cache to store earthquake data.
+* You can adjust cache settings in application.properties.
+
+## License
+
+This project is licensed under the Apache License - see the LICENSE file for details.
