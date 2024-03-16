@@ -7,7 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record GetEarthquakesResponse(List<Feature> features) {
 
     public record Feature(String id, Properties properties, Geometry geometry) {
-        public record Properties(String place, @JsonProperty("mag") double magnitude, Long time) {}
-        public record Geometry(List<Double> coordinates) {}
+        public record Properties(String place, @JsonProperty("mag") double magnitude, Long time) {
+        }
+
+        public record Geometry(List<Double> coordinates) {
+        }
     }
 }

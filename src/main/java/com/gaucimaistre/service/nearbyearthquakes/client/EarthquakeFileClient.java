@@ -28,7 +28,8 @@ public class EarthquakeFileClient implements EarthquakeClient {
 
             return earthquakes;
         } catch (IOException exception) {
-            final EarthquakeRetrievalFailedException earthquakeRetrievalFailedException = new EarthquakeRetrievalFailedException(exception);
+            final EarthquakeRetrievalFailedException earthquakeRetrievalFailedException = new EarthquakeRetrievalFailedException(
+                    exception);
             log.error("File parsing failed", earthquakeRetrievalFailedException);
             throw earthquakeRetrievalFailedException;
         }

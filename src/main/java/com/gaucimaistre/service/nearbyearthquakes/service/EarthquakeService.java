@@ -2,6 +2,7 @@ package com.gaucimaistre.service.nearbyearthquakes.service;
 
 import java.util.List;
 
+import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
@@ -20,8 +21,8 @@ public class EarthquakeService {
     private final EarthquakeMapper earthquakeMapper;
     private final EarthquakeResponseMapper earthquakeResponseMapper;
 
-    public GetEarthquakesByLocationResponse getNearbyEarthquakes(String latitude, String longitude) {
-        List<Earthquake> earthquakes = repository.findByDistance(Double.parseDouble(latitude), Double.parseDouble(longitude))
+    public GetEarthquakesByLocationResponse getNearbyEarthquakes(Point point) {
+        List<Earthquake> earthquakes = repository.findByDistance(point.getX(), point.getY())
             .stream()
             .map(earthquakeMapper::mapToEarthquake)
             .toList();

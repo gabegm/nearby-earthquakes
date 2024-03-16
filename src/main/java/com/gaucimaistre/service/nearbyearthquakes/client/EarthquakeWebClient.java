@@ -22,15 +22,16 @@ public class EarthquakeWebClient implements EarthquakeClient {
     public GetEarthquakesResponse getEarthquakes() {
         log.info(URL);
         try {
-        GetEarthquakesResponse earthquakes = webClient.get()
-                .uri(URL)
-                .retrieve()
-                .bodyToMono(GetEarthquakesResponse.class)
-                .block();
+            GetEarthquakesResponse earthquakes = webClient.get()
+                    .uri(URL)
+                    .retrieve()
+                    .bodyToMono(GetEarthquakesResponse.class)
+                    .block();
 
-        return earthquakes;
+            return earthquakes;
         } catch (RuntimeException exception) {
-            final EarthquakeRetrievalFailedException earthquakeRetrievalFailedException = new EarthquakeRetrievalFailedException(exception);
+            final EarthquakeRetrievalFailedException earthquakeRetrievalFailedException = new EarthquakeRetrievalFailedException(
+                    exception);
             log.error("API call failed", earthquakeRetrievalFailedException);
             throw earthquakeRetrievalFailedException;
         }
