@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:22
+FROM azul/zulu-openjdk-alpine:23
 LABEL "maintainer" = "gaucimaistre.com"
 VOLUME /tmp
 WORKDIR /app
