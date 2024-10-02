@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.3'
+	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-	implementation platform("org.springframework.boot:spring-boot-dependencies:3.3.3") {
+	implementation platform("org.springframework.boot:spring-boot-dependencies:3.3.4") {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -36,9 +36,9 @@ dependencies {
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	}
 
-	implementation 'org.mapstruct:mapstruct:1.6.0'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0'
-    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0'
+	implementation 'org.mapstruct:mapstruct:1.6.2'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
+    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
 }
 
 tasks.named('test') {
