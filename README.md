@@ -34,7 +34,7 @@ $ ./gradlew test
 
 ```sh
 $ ./gradlew bootRun
-$ curl -v http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226
+$ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
 
 {
     "earthquakes": [
@@ -78,7 +78,7 @@ $ curl -v http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226
 $ docker build -t nearby-earthquakes .
 $ docker run -p 8080:8080 -t nearby-earthquakes
 
-$ curl -v http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226
+$ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
 
 {
     "earthquakes": [
