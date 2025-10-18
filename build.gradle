@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.4'
+	id 'org.springframework.boot' version '3.5.6'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -8,8 +8,9 @@ group = 'com.gaucimaistre.service'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '21'
-	targetCompatibility = '21'
+	toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 configurations {
@@ -23,7 +24,7 @@ repositories {
 }
 
 dependencies {
-	implementation platform("org.springframework.boot:spring-boot-dependencies:3.4.4") {
+	implementation platform("org.springframework.boot:spring-boot-dependencies:3.5.6") {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -41,16 +42,10 @@ dependencies {
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += "-Amapstruct.defaultComponentModel=spring"
+}
+
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
-
-task mapStruct() {
-    sourceSets.main.java.srcDir file("${buildDir}/mappers")
-    tasks.withType(JavaCompile) {
-        options.setAnnotationProcessorGeneratedSourcesDirectory(file("${buildDir}/mappers"))
-        options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
-    }
-}
-
-compileJava.dependsOn(mapStruct)
