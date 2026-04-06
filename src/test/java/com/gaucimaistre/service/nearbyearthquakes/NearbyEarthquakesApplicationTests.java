@@ -18,7 +18,9 @@ class NearbyEarthquakesApplicationTests {
 
     @Test
     void successfulStartup() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/"))
+        mvc.perform(MockMvcRequestBuilders.get("/nearby")
+                        .param("latitude", "48.193889")
+                        .param("longitude", "11.221226"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
     }

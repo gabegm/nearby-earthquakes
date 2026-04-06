@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
 import com.gaucimaistre.service.nearbyearthquakes.service.EarthquakeService;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,17 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class EarthquakeController {
     private final EarthquakeService service;
 
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public String home() {
-        log.info("Handling home request");
-        return "";
-    }
-
     @ResponseBody
     @GetMapping(value = "/nearby", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GetEarthquakesByLocationResponse getNearbyEarthquakes(@RequestParam Double latitude,
-            @RequestParam Double longitude) {
+    public GetEarthquakesByLocationResponse getNearbyEarthquakes(
+            @RequestParam @NotNull @DecimalMin("-90.0") @DecimalMax("90.0") Double latitude,
+            @RequestParam @NotNull @DecimalMin("-180.0") @DecimalMax("180.0") Double longitude) {
         log.info("Handling GetNearbyEarthquakes request");
         GetEarthquakesByLocationResponse response = service.getNearbyEarthquakes(new Point(latitude, longitude));
         log.debug(response.toString());

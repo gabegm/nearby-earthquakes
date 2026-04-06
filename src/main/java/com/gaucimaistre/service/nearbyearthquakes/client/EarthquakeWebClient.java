@@ -2,34 +2,34 @@ package com.gaucimaistre.service.nearbyearthquakes.client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse;
 import com.gaucimaistre.service.nearbyearthquakes.exception.EarthquakeRetrievalFailedException;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class EarthquakeWebClient implements EarthquakeClient {
-    @Value("${api.earthquakes.url}")
-    private String URL;
-    private final WebClient webClient;
+    private final String url;
+    private final RestClient restClient;
+
+    public EarthquakeWebClient(@Value("${api.earthquakes.url}") String url, RestClient restClient) {
+        this.url = url;
+        this.restClient = restClient;
+    }
 
     @Override
     public GetEarthquakesResponse getEarthquakes() {
-        log.info(URL);
+        log.debug("Fetching earthquakes from {}", url);
         try {
-            GetEarthquakesResponse earthquakes = webClient.get()
-                    .uri(URL)
+            return restClient.get()
+                    .uri(url)
                     .retrieve()
-                    .bodyToMono(GetEarthquakesResponse.class)
-                    .block();
-
-            return earthquakes;
-        } catch (RuntimeException exception) {
+                    .body(GetEarthquakesResponse.class);
+        } catch (RestClientException exception) {
             final EarthquakeRetrievalFailedException earthquakeRetrievalFailedException = new EarthquakeRetrievalFailedException(
                     exception);
             log.error("API call failed", earthquakeRetrievalFailedException);
