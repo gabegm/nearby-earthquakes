@@ -25,4 +25,8 @@ replay_pid*
 .gradle/
 build/
 .vscode/
-.idea/
+.idea/bin/
+.classpath
+.factorypath
+.project
+.settings/
