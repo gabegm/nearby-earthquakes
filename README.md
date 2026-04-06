@@ -30,43 +30,49 @@ $ ./gradlew test
 
 ## Running the Application
 
+The application starts on a random available port assigned by the OS. Check the startup log for the actual port:
+
+```
+Tomcat started on port 54321 (http) with context path '/'
+```
+
 1. Directly with Gradle:
 
 ```sh
 $ ./gradlew bootRun
-$ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
+$ curl -v "http://127.0.0.1:<PORT>/nearby?latitude=48.193889&longitude=11.221226"
 
 {
     "earthquakes": [
         {
-            "title": "M 4.8 | 185 km NNW of Las Khorey, Somalia || 138"
+            "title": "M 4.8 - 185 km NNW of Las Khorey, Somalia || 138"
         },
         {
-            "title": "M 4.3 | 21 km NNE of Djibouti, Djibouti || 557"
+            "title": "M 4.3 - 21 km NNE of Djibouti, Djibouti || 557"
         },
         {
-            "title": "M 4.5 | 189 km WNW of Farasān, Saudi Arabia || 986"
+            "title": "M 4.5 - 189 km WNW of Farasān, Saudi Arabia || 986"
         },
         {
-            "title": "M 5.0 | Owen Fracture Zone region || 1050"
+            "title": "M 5.0 - Owen Fracture Zone region || 1050"
         },
         {
-            "title": "M 5.9 | Owen Fracture Zone region || 1053"
+            "title": "M 5.9 - Owen Fracture Zone region || 1053"
         },
         {
-            "title": "M 4.9 | Owen Fracture Zone region || 1068"
+            "title": "M 4.9 - Owen Fracture Zone region || 1068"
         },
         {
-            "title": "M 4.6 | 33 km W of Bandar Abbas, Iran || 1382"
+            "title": "M 4.6 - 33 km W of Bandar Abbas, Iran || 1382"
         },
         {
-            "title": "M 4.5 | Carlsberg Ridge || 1392"
+            "title": "M 4.5 - Carlsberg Ridge || 1392"
         },
         {
-            "title": "M 5.0 | 56 km NNW of Bandar Abbas, Iran || 1421"
+            "title": "M 5.0 - 56 km NNW of Bandar Abbas, Iran || 1421"
         },
         {
-            "title": "M 4.6 | Carlsberg Ridge || 1432"
+            "title": "M 4.6 - Carlsberg Ridge || 1432"
         }
     ]
 }
@@ -76,7 +82,7 @@ $ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
 
 ```sh
 $ docker build -t nearby-earthquakes .
-$ docker run -p 8080:8080 -t nearby-earthquakes
+$ docker run -p 8080:8080 -e SERVER_PORT=8080 -t nearby-earthquakes
 
 $ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
 
@@ -86,6 +92,8 @@ $ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
     ]
 }
 ```
+
+> **Note:** When running via Docker, fix the port by passing `-e SERVER_PORT=8080` and mapping it with `-p <host>:<container>`.
 
 ## API Endpoints
 
@@ -100,8 +108,9 @@ $ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
 
 ## Configuration
 
-* The application uses an in-memory cache to store earthquake data.
-* You can adjust cache settings in application.properties.
+* The application uses an H2 in-memory database to store earthquake data.
+* Earthquake data is refreshed daily at 09:00 from the USGS feed.
+* The application starts on a random available port by default (`server.port=0`). Override by setting the `SERVER_PORT` environment variable or updating `application.properties`.
 
 ## License
 
