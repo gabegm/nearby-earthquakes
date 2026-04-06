@@ -6,8 +6,8 @@ import org.mapstruct.Mapping;
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse.EarthquakeResponse;
 import com.gaucimaistre.service.nearbyearthquakes.model.Earthquake;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EarthquakeResponseMapper {
-        @Mapping(target = "title", expression = "java(earthquake.getTitle())")
-        EarthquakeResponse mapToEarthquakeResponse(Earthquake earthquake);
+    @Mapping(target = "title", expression = "java(earthquake.getTitle())")
+    EarthquakeResponse mapToEarthquakeResponse(Earthquake earthquake);
 }

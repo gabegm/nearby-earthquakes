@@ -1,55 +1,70 @@
 package com.gaucimaistre.service.nearbyearthquakes.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.data.geo.Point;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
 
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse;
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesByLocationResponse.EarthquakeResponse;
 import com.gaucimaistre.service.nearbyearthquakes.exception.EarthquakeRetrievalFailedException;
 import com.gaucimaistre.service.nearbyearthquakes.service.EarthquakeService;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(EarthquakeController.class)
 public class EarthquakeControllerTest {
-        @Mock
-        private EarthquakeService service;
+    @Autowired
+    private MockMvc mockMvc;
 
-        @InjectMocks
-        private EarthquakeController controller;
+    @MockitoBean
+    private EarthquakeService service;
 
-        @Test
-        public void getNearbyEarthquakes() {
-                GetEarthquakesByLocationResponse expectedResponse = new GetEarthquakesByLocationResponse(
-                                List.of(
-                                                new EarthquakeResponse("someTitle"),
-                                                new EarthquakeResponse("someOtherTitle")));
+    @Test
+    public void getNearbyEarthquakes() throws Exception {
+        GetEarthquakesByLocationResponse expectedResponse = new GetEarthquakesByLocationResponse(
+                List.of(
+                        new EarthquakeResponse("someTitle"),
+                        new EarthquakeResponse("someOtherTitle")));
 
-                Point point = new Point(1.1, 2.2);
-                when(service.getNearbyEarthquakes(point)).thenReturn(expectedResponse);
-                GetEarthquakesByLocationResponse actualResponse = service.getNearbyEarthquakes(point);
+        when(service.getNearbyEarthquakes(any(Point.class))).thenReturn(expectedResponse);
 
-                assertThat(actualResponse.earthquakes().get(0).title())
-                                .isEqualTo(expectedResponse.earthquakes().get(0).title());
-                assertThat(actualResponse.earthquakes().get(1).title())
-                                .isEqualTo(expectedResponse.earthquakes().get(1).title());
-        }
+        mockMvc.perform(get("/nearby")
+                        .param("latitude", "48.193889")
+                        .param("longitude", "11.221226")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.earthquakes[0].title").value("someTitle"))
+                .andExpect(jsonPath("$.earthquakes[1].title").value("someOtherTitle"));
+    }
 
-        @Test
-        public void getNearbyEarthquakesException() {
-                Point point = new Point(1.1, 2.2);
-                when(service.getNearbyEarthquakes(point))
-                                .thenThrow(new EarthquakeRetrievalFailedException(new RuntimeException()));
+    @Test
+    public void getNearbyEarthquakes_serviceFailure_returns424() throws Exception {
+        when(service.getNearbyEarthquakes(any(Point.class)))
+                .thenThrow(new EarthquakeRetrievalFailedException(new org.springframework.web.client.RestClientException("timeout")));
 
-                assertThatThrownBy(() -> controller.getNearbyEarthquakes(point.getX(), point.getY()))
-                                .isInstanceOf(EarthquakeRetrievalFailedException.class);
-        }
+        mockMvc.perform(get("/nearby")
+                        .param("latitude", "48.193889")
+                        .param("longitude", "11.221226")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isFailedDependency());
+    }
+
+    @Test
+    public void getNearbyEarthquakes_invalidLatitude_returns400() throws Exception {
+        mockMvc.perform(get("/nearby")
+                        .param("latitude", "999.0")
+                        .param("longitude", "11.221226")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+    }
 }

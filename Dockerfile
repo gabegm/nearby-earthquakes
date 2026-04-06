@@ -1,13 +1,17 @@
-FROM azul/zulu-openjdk-alpine:25
-LABEL "maintainer" = "gaucimaistre.com"
-VOLUME /tmp
+FROM eclipse-temurin:21-jdk AS build
+LABEL maintainer="gaucimaistre.com"
 WORKDIR /app
-EXPOSE 8080
 
 COPY gradle gradle
-COPY settings.gradle .
 COPY gradlew .
+COPY settings.gradle .
 COPY build.gradle .
 COPY src src
 
-CMD ["./gradlew", "bootRun"]
+RUN ./gradlew bootJar --no-daemon
+
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+EXPOSE 8080
+COPY --from=build /app/build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]

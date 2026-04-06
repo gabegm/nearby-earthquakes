@@ -6,7 +6,7 @@ import org.mapstruct.Mapping;
 import com.gaucimaistre.service.nearbyearthquakes.model.Earthquake;
 import com.gaucimaistre.service.nearbyearthquakes.model.EarthquakeEntity;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EarthquakeMapper {
     @Mapping(target = "address", source = "place")
     Earthquake mapToEarthquake(EarthquakeEntity earthquakeEntity);

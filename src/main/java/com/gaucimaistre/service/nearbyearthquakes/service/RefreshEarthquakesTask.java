@@ -34,7 +34,7 @@ public class RefreshEarthquakesTask {
     private final EarthquakeEntityMapper earthquakeEntityMapper;
 
     @EventListener(ApplicationReadyEvent.class)
-    @Scheduled(cron = "0 9 * * * ?")
+    @Scheduled(cron = "0 0 9 * * ?")
 	public void refreshEarthquakes() {
         try {
             log.debug("The time is now {}", dateFormat.format(Instant.now()));
@@ -45,6 +45,7 @@ public class RefreshEarthquakesTask {
                 .map(earthquakeEntityMapper::mapToEarthquakeEntity)
                 .toList();
 
+            repository.deleteAll();
             repository.saveAll(earthquakeEntities);
         } catch(EarthquakeRetrievalFailedException exception) {
             log.error("Failed to retrieve response from client", exception);

@@ -38,5 +38,6 @@ public class EarthquakeEntity {
     @Column
     private Instant time;
 
+    @Column
     private int distance;
 }

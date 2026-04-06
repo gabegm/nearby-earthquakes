@@ -90,7 +90,7 @@ $ curl -v "http://127.0.0.1:8080/nearby?latitude=48.193889&longitude=11.221226"
 ## API Endpoints
 
 ### Get Nearest Earthquakes
-* Endpoint: /api/nearby
+* Endpoint: /nearby
 * Method: GET
 * Parameters:
     * longitude: Longitude of the location (required)
