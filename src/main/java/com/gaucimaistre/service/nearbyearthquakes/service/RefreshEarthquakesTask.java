@@ -45,6 +45,11 @@ public class RefreshEarthquakesTask {
                 .map(earthquakeEntityMapper::mapToEarthquakeEntity)
                 .toList();
 
+            if (earthquakeEntities.isEmpty()) {
+                log.warn("Received 0 earthquakes from client, skipping refresh to preserve existing data");
+                return;
+            }
+
             repository.deleteAll();
             repository.saveAll(earthquakeEntities);
         } catch(EarthquakeRetrievalFailedException exception) {
