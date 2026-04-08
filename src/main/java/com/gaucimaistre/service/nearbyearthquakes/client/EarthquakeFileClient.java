@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.gaucimaistre.service.nearbyearthquakes.dto.GetEarthquakesResponse;
 import com.gaucimaistre.service.nearbyearthquakes.exception.EarthquakeRetrievalFailedException;
 
